@@ -1,18 +1,19 @@
 const { Sequelize } = require('sequelize');
+const fs = require('fs');
 
 function getTimeZone() {
   var offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
   return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
 }
-const sequelize = new Sequelize('setup', '2wkvlwt7zgyb0abcde9m', 'pscale_pw_rKphKSHa5ldd8N9WoDDPfq33XUPylKwMQePXUl7e1bv', {
-  host: 'aws.connect.psdb.cloud',
-  // port:'42622',
+const sequelize = new Sequelize('sql11666344', 'sql11666344', 'x3D6G3Bm6G', {
+  host: 'sql11.freemysqlhosting.net',
+  port:'3306',
   dialect: 'mysql' ,
-  "timezone": "+05:30",
+  // "timezone": getTimeZone(),
     "dialectOptions": {
-      ssl: {
-        required: false,
-      },
+      // ssl: {
+      //   ca: fs.readFileSync(process.env.DB_CA_PATH, "utf8"),
+      // }
     },
 });
 
@@ -23,6 +24,6 @@ try {
     console.error('Unable to connect to the database:', error);
   }
 
-// sequelize.sync();
+sequelize.sync();
 
 module.exports = sequelize;
